@@ -55,7 +55,7 @@ describe("When messages are received", function () {
         expect(axiosRequest.post).to.have.been.calledOnce;
         expect(axiosRequest.put).to.have.been.calledOnce;
         expect(messages[0].complete).to.have.been.called;
-        expect(console.log).to.have.been.callCount(7);
+        expect(console.log).to.have.been.callCount(8);
         expect(console.log).to.have.been.calledWith('1234: Processing message from service Example');
         expect(console.log).to.have.been.calledWithMatch('1234: Received callback message:');
         expect(console.log).to.have.been.calledWith('1234: Received Callback Message is Valid!!!');
