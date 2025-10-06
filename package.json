@@ -17,6 +17,7 @@
   "dependencies": {
     "@azure/service-bus": "^1.1.7",
     "@hmcts/properties-volume": "^1.0.0",
+    "@local/azure-service-bus-wrapper": "file:../service-bus/azure-servicebus-wrapper",
     "applicationinsights": "^2.0.0",
     "axios": "^1.5.1",
     "config": "^3.3.1",

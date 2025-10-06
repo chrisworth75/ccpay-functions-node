@@ -1,6 +1,13 @@
 const axiosRequest = require('axios');
-const { ServiceBusClient, ReceiveMode } = require("@azure/service-bus");
-const config = require('@hmcts/properties-volume').addTo(require('config'));
+// Use local RabbitMQ wrapper for local development, Azure Service Bus for production
+const useLocalServiceBus = process.env.USE_LOCAL_SERVICE_BUS === 'true';
+const { ServiceBusClient, ReceiveMode } = useLocalServiceBus
+    ? require("@local/azure-service-bus-wrapper")
+    : require("@azure/service-bus");
+// Skip properties-volume for local development
+const config = useLocalServiceBus
+    ? require('config')
+    : require('@hmcts/properties-volume').addTo(require('config'));
 const otp = require('otp');
 const { randomInt } = require('crypto');
 

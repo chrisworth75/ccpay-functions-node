@@ -1,0 +1,16 @@
+{
+  "servicecallbackTopicName": "ccpay-service-callback-topic",
+  "servicecallbackBusConnection": "amqp://admin:admin@localhost:5672",
+  "servicecallbackSubscriptionName": "serviceCallbackPremiumSubscription",
+  "processMessagesCount": 10,
+  "appInsightsInstumentationKey": "local-key-not-used",
+  "delayMessageMinutes": 1,
+  "s2sUrl": "http://localhost:8489",
+  "microservicePaymentApp": "payment_app",
+  "extraServiceLogging": true,
+  "secrets": {
+    "ccpay": {
+      "payment-s2s-secret": "LOCAL_S2S_SECRET"
+    }
+  }
+}

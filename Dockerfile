@@ -1,13 +1,30 @@
-FROM hmctspublic.azurecr.io/base/node:20-alpine as base
+FROM node:18-alpine as base
 
-USER root
-RUN corepack enable
-USER hmcts
+# Install git for dependencies that may need it
+RUN apk add --no-cache git
 
-COPY --chown=hmcts:hmcts . .
-RUN yarn workspaces focus --all --production \
-  && yarn cache clean
+WORKDIR /app
 
-# ---- Runtime imge ----
-FROM base as runtime
+# Copy package files
+COPY package.json yarn.lock* package-lock.json* ./
+
+# Install dependencies
+RUN if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
+    elif [ -f package-lock.json ]; then npm ci; \
+    else npm install; fi
+
+# Copy application source
 COPY . .
+
+# Create non-root user
+RUN addgroup -g 1000 node-app && \
+    adduser -D -u 1000 -G node-app node-app && \
+    chown -R node-app:node-app /app
+
+USER node-app
+
+# Expose port (not used for this function but good practice)
+EXPOSE 3000
+
+# Start the application
+CMD ["node", "serviceCallbackFunction/index.js"]
